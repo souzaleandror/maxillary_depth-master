@@ -1,0 +1,325 @@
+<%= content_for(:title, "Exam: " + @exam.id.to_s ) -%>
+
+<p class="col-md-2 float-left">
+  <strong>ID:</strong>
+  <%= @exam.id -%>
+</p>
+
+<p class="col-md-2 float-left">
+  <%= link_to @exam.patient do -%>
+    <strong>Patient:</strong>
+    <%= @exam.patient.name if @exam.patient.present? -%>
+  <% end -%>
+</p>
+
+<p class="col-md-2 float-left">
+  <%= link_to @exam.types_exam do %>
+    <strong>Type exam:</strong>
+    <%= @exam.types_exam.name if @exam.types_exam.present? %>
+  <% end %>
+</p>
+
+<div class="clearfix"></div>
+
+<p class="col-md-2 float-left">
+  <span class="sphere point_n"></span>
+  <strong>Point N:</strong><br>
+  <strong class="ml-2">X: </strong><%= @exam.point_n.x.to_s -%><br>
+  <strong class="ml-2">Y: </strong><%= @exam.point_n.y.to_s -%><br>
+</p>
+
+<p class="col-md-2 float-left">
+  <span class="sphere point_a"></span>
+  <strong>Point A:</strong><br>
+  <strong class="ml-2">X: </strong><%= @exam.point_a.x.to_s -%><br>
+  <strong class="ml-2">Y: </strong><%= @exam.point_a.y.to_s -%><br>
+</p>
+
+<p class="col-md-2 float-left">
+  <span class="sphere point_po"></span>
+  <strong>Point P.O.:</strong><br>
+  <strong class="ml-2">X: </strong><%= @exam.point_po.x.to_s -%><br>
+  <strong class="ml-2">Y: </strong><%= @exam.point_po.y.to_s -%><br>
+</p>
+
+<p class="col-md-2 float-left">
+  <span class="sphere point_or"></span>
+  <strong>Point O.R.:</strong><br>
+  <strong class="ml-2">X: </strong><%= @exam.point_or.x.to_s -%><br>
+  <strong class="ml-2">Y: </strong><%= @exam.point_or.y.to_s -%><br>
+</p>
+
+<p class="col-md-2 float-left">
+  <strong>Angle:</strong>
+  <%= @exam.maxillary_depth_angle -%>
+</p>
+
+<div class="clearfix"></div>
+
+<%= link_to 'Back', exams_path, class: "btn btn-secondary ml-2 float-right", autofocus: true, tabindex: 3 -%>
+<%= link_to 'Destroy', @exam, class: "btn btn-danger ml-2 float-right", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 2 %>
+<%= link_to 'Edit', edit_exam_path(@exam), class: "btn btn-warning float-right", tabindex: 1 -%>
+
+<div class="clearfix"></div>
+<hr>
+<div class="clearfix"></div>
+<div id="myCanvas">
+</div>
+
+<script>
+		var n = 1;
+		var clock;
+		var scene;
+		var camera;
+		var renderer;
+		var axis;
+		var texture;
+		var light;
+		var trackballControls;
+		var controls, gui;
+		var image, backImage;
+
+		function initClock()
+		{
+			clock = new THREE.Clock();
+		}
+
+		function initScene()
+		{
+			scene = new THREE.Scene();
+		}
+
+		function initCamera()
+		{
+			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+			camera.position.set(500, 250, 1200);
+			camera.lookAt(scene.position);
+		}
+
+		function initRenderer()
+		{
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth - 20, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+			renderer.setClearColor(0xeeeeee, 1);
+		}
+
+		function initAxisInScene()
+		{
+			var axis = new THREE.AxisHelper(1000);
+			scene.add(axis);
+		}
+
+		function setImageBackground() 
+		{
+			texture = new THREE.TextureLoader().load('../images/rad9.jpg');
+			scene.background = texture;
+		}
+
+		function setImage()
+		{
+			var loader = new THREE.TextureLoader();
+			var material = new THREE.MeshLambertMaterial({
+				map: loader.load('../images/rad3.jpg')
+			});
+
+			var geometry = new THREE.PlaneGeometry(1200, 1200);
+
+			var mesh = new THREE.Mesh(geometry, material);
+			mesh.position.set(370, 370, -50);
+			scene.add(mesh);
+		}
+
+		function setLight()
+		{
+			light = new THREE.PointLight(0xeeeeee, 1, 0);
+			light.position.set(5, 10, 100);
+			scene.add(light);	
+		}
+
+		function setTrackballCamera()
+		{
+			trackballControls = new THREE.TrackballControls(camera, renderer.domElement);
+			trackballControls.rotateSpeed 	= 1.0;
+			trackballControls.zoomSpeed 	= 1.0;
+			trackballControls.panSpeed 		= 1.0;
+			trackballControls.noZoom		= false;
+		}
+
+		function render() {
+			// Tempo passado entre o ultimo frame e o frame atual
+			var delta = clock.getDelta();
+
+			trackballControls.update(delta);
+
+			trackballControls.rotationSpeed = 0.01;
+			trackballControls.zoomSpeed = 0.01;
+			trackballControls.panSpeed = 0.01;
+
+			requestAnimationFrame(render);
+
+			renderer.render(scene, camera);
+		}
+
+		function setPointN()
+		{
+			var sphereGeometryPointN = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointN = new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 1 });
+			spherePointN = new THREE.Mesh(sphereGeometryPointN, sphereMaterialPointN);
+			spherePointN.position.set(<%= @exam.point_n.x.to_f -%> / n, <%= @exam.point_n.y.to_f -%> / n, 0);
+			spherePointN.name = 'Point N';
+			scene.add(spherePointN);
+		}
+
+		function setPointA()
+		{
+			var sphereGeometryPointA = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointA = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 1 });
+			spherePointA = new THREE.Mesh(sphereGeometryPointA, sphereMaterialPointA);
+			spherePointA.position.set(<%= @exam.point_a.x.to_f -%> / n, <%= @exam.point_a.y.to_f -%> / n, 0);
+			spherePointA.name = 'Point A';
+			scene.add(spherePointA);
+		}
+
+		function setPointPO()
+		{
+			var sphereGeometryPointPO = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointPO = new THREE.MeshBasicMaterial({ color: 0xffff00, opacity: 1 });
+			spherePointPO = new THREE.Mesh(sphereGeometryPointPO, sphereMaterialPointPO);
+			spherePointPO.position.set(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_po.y.to_f -%> / n, 0);
+			spherePointPO.name = 'Point P.O.';
+			scene.add(spherePointPO);
+		}
+
+		function setPointOR()
+		{
+			var sphereGeometryPointOR = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointOR = new THREE.MeshBasicMaterial({ color: 0x006600, opacity: 1 });
+			spherePointOR = new THREE.Mesh(sphereGeometryPointOR, sphereMaterialPointOR);
+			spherePointOR.position.set(<%= @exam.point_or.x.to_f -%> / n, <%= @exam.point_or.y.to_f -%> / n, 0);
+			spherePointOR.name = 'Point O.R.';
+			scene.add(spherePointOR);
+		}
+
+
+		function setPointAPointN()
+		{
+			var material = new THREE.LineBasicMaterial({ color: 0xff9900, linewidth: 30, fog: true });
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_n.x.to_f -%> / n, <%= @exam.point_n.y.to_f -%> / n, 0));
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_a.x.to_f -%> / n, <%= @exam.point_a.y.to_f -%> / n, 0));
+			var line = new THREE.Line(geometry, material);
+			line.name = 'Point N - Point A';
+			scene.add(line);
+		}
+
+		function setPointPOPointOR()
+		{
+			var material = new THREE.LineBasicMaterial({ color: 0xff9900, linewidth: 15, fog: true });
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_po.y.to_f -%> / n, 0));
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_or.x.to_f -%> / n, <%= @exam.point_or.y.to_f -%> / n, 0));
+			var line = new THREE.Line(geometry, material);
+			line.name = 'Point P.O. - Point O.R.';
+			scene.add(line);
+		}
+
+		function setExtendedPoint()
+		{
+			var material2 = new THREE.LineBasicMaterial({ color: 0xff99ff, linewidth: 30, fog: true });
+			var geometry2 = new THREE.Geometry();
+			geometry2.vertices.push(new THREE.Vector3(<%= @exam.point_or.x.to_f -%> / n, <%= @exam.point_or.y.to_f %> / n, 0));
+			geometry2.vertices.push(new THREE.Vector3((<%= ((@exam.point_or.x.to_f - @exam.point_po.x.to_f) + @exam.point_or.x.to_f) - 200 %> ) / n, (<%= ((@exam.point_or.y.to_f - @exam.point_po.y.to_f) + @exam.point_or.y.to_f) %> ) / n, 0));
+			var line2 = new THREE.Line(geometry2, material2);
+			line2.name = 'Others';
+			scene.add(line2);
+
+
+		}
+
+		function setPointAPointPO()
+		{
+			var material = new THREE.LineBasicMaterial({ color: 0xffff00, linewidth: 15, fog: true });
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_a.x.to_f -%> / n, <%= @exam.point_a.y.to_f -%> / n, 0));
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_po.y.to_f -%> / n, 0));
+			var line = new THREE.Line(geometry, material);
+			line.name = 'Point A - Point P.O.';
+			scene.add(line);
+		}
+
+		function setPointNPointPO()
+		{
+			var material = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 15, fog: true });
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_n.x.to_f -%> / n, <%= @exam.point_n.y.to_f -%> / n, 0));
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_po.y.to_f -%> / n, 0));
+			var line = new THREE.Line(geometry, material);
+			line.name = 'Point P.O. - Point O.R.';
+			scene.add(line);
+		}
+
+		function SetPoinTest() {
+			var material = new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 15, fog: true });
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_po.y.to_f -%> / n, 0));
+			geometry.vertices.push(new THREE.Vector3(700 / n, <%= @exam.point_po.y.to_f -%> / n, 0));
+			var line = new THREE.Line(geometry, material);
+			line.name = 'Point P.O. - Point O.R.';
+			scene.add(line);
+
+			var sphereGeometryPointOR = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointOR = new THREE.MeshBasicMaterial({ color: 0x006600, opacity: 1 });
+			spherePointOR = new THREE.Mesh(sphereGeometryPointOR, sphereMaterialPointOR);
+			spherePointOR.position.set(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_a.y.to_f -%> / n, 0);
+			spherePointOR.name = 'Point O.R.';
+			scene.add(spherePointOR);
+
+			var sphereGeometryPointOR = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointOR = new THREE.MeshBasicMaterial({ color: 0x006600, opacity: 1 });
+			spherePointOR = new THREE.Mesh(sphereGeometryPointOR, sphereMaterialPointOR);
+			spherePointOR.position.set(<%= @exam.point_po.x.to_f -%> / n, <%= @exam.point_n.y.to_f -%> / n, 0);
+			spherePointOR.name = 'Point O.R.';
+			scene.add(spherePointOR);
+
+			var sphereGeometryPointOR = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointOR = new THREE.MeshBasicMaterial({ color: 0x0066ff, opacity: 1 });
+			spherePointOR = new THREE.Mesh(sphereGeometryPointOR, sphereMaterialPointOR);
+			spherePointOR.position.set(<%= (((@exam.point_n.x.to_f - @exam.point_a.x.to_f) / 2) + @exam.point_a.x.to_f) -%> / n, <%= (((@exam.point_n.y.to_f - @exam.point_a.y.to_f) / 2) + @exam.point_a.y.to_f) -%> / n, 0);
+			spherePointOR.name = 'Point O.R.';
+			scene.add(spherePointOR);
+
+			var sphereGeometryPointOR = new THREE.SphereGeometry(5, 20, 20);
+			var sphereMaterialPointOR = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 1 });
+			spherePointOR = new THREE.Mesh(sphereGeometryPointOR, sphereMaterialPointOR);
+			spherePointOR.position.set(<%= (((@exam.point_n.x.to_f - @exam.point_a.x.to_f) / 2) + @exam.point_a.x.to_f) -%> / n, <%= ((@exam.point_or.y.to_f - @exam.point_po.y.to_f) + @exam.point_or.y.to_f) -%> / n, 0);
+			spherePointOR.name = 'Intersection';
+			scene.add(spherePointOR);
+		}
+
+		function init(){
+			initClock();
+			initScene();
+			initCamera();
+			initRenderer();
+			initAxisInScene();
+			//setImageBackground();
+			setImage();
+			setLight();
+			setTrackballCamera();
+			render();
+
+			setPointN();
+			setPointA();
+			setPointPO();
+			setPointOR();
+			setPointAPointN();
+			setPointPOPointOR();
+			setPointAPointPO();
+			setPointNPointPO();
+			setExtendedPoint();
+			//SetPoinTest();
+		}
+
+		window.onload = init;
+</script>

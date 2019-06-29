@@ -1,0 +1,7 @@
+$('.modal_exam').html("<%= j render 'exams/modal_exam', exam: @exam, patient: @patient %>");
+$('#modal_exam').modal('toggle');
+$('#modal-label').html('New Exam');
+$('#btn-action').show();
+$('#modal_exam').on('shown.bs.modal', function() {
+  $('#point_n_x').focus();
+});

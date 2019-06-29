@@ -1,0 +1,65 @@
+<%= content_for(:title, "Points") -%>
+<%= link_to 'New Point', new_point_path, class: "btn btn-primary float-right" %>
+<h1>Points</h1>
+<hr>
+<table id="t-points" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Point type</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Exam ID</th>
+      <th class="float-right">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @points.each do |point| %>
+      <tr>
+        <td><%= link_to point.id, point -%></td>
+        <td><%= link_to (point.point_type.present? ? point.point_type.titleize : "N/A"), point  -%></td>
+        <td><%= link_to point.x.to_s, point -%></td>
+        <td><%= link_to point.y.to_s, point -%></td>
+        <td>
+          <% if point.point_type.present? %>
+            <% case point.point_type.to_s %>
+            <% when "point_n" %>
+              <%= link_to (point.point_n_exams.present? ? point.point_n_exams.id.to_s : "N/A"), point -%>
+              <% when "point_a" %>
+              <%= link_to (point.point_a_exams.present? ? point.point_a_exams.id.to_s : "N/A"), point -%>
+              <% when "point_po" %>
+              <%= link_to (point.point_po_exams.present? ? point.point_po_exams.id.to_s : "N/A"), point -%>
+              <% when "point_or" %>
+              <%= link_to (point.point_or_exams.present? ? point.point_or_exams.id.to_s : "N/A"), point -%>
+            <% else %>
+              N/A
+            <% end %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+        <td>
+          <div class="float-right">
+            <%= link_to 'Show', point, class: "btn btn-sm btn-info" %>
+            <%= link_to 'Edit', edit_point_path(point), class: "btn btn-sm btn-warning" %>
+            <%= link_to 'Destroy', point, class: "btn btn-sm btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+      <tr>
+        <th>ID</th>
+        <th>Point type</th>
+        <th>X</th>
+        <th>Y</th>
+        <th>Exam ID</th>
+        <th class="float-right">Actions</th>
+      </tr>
+    </tfoot>
+</table>
+<hr>
+<%= link_to 'New Point', new_point_path, class: "btn btn-primary" %>

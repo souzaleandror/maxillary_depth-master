@@ -1,0 +1,19 @@
+<%= content_for(:title, ("Point :" + @point.id.to_s ) ) -%>
+<p>
+  <strong>Point type:</strong>
+  <%= @point.point_type.to_s.titleize if @point.point_type.present? %>
+</p>
+
+<p>
+  <strong>X:</strong>
+  <%= @point.x.to_s %>
+</p>
+
+<p>
+  <strong>Y:</strong>
+  <%= @point.y.to_s %>
+</p>
+
+<%= link_to 'Edit', edit_point_path(@point), class: "btn btn-warning", autofocus: true, tabindex: 1 -%> 
+<%= link_to 'Destroy', @point, class: "btn btn-danger ml-2", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 2 %>
+<%= link_to 'Back', points_path, class: "btn btn-secondary ml-2", tabindex: 3 -%>

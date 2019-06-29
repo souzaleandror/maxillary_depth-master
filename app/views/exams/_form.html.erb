@@ -1,0 +1,101 @@
+<%= form_with(model: exam, local: true) do |form| %>
+  <% if exam.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(exam.errors.count, "error") %> prohibited this exam from being saved:</h2>
+
+      <ul>
+      <% exam.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= form.label :patient_id, "Patient" %> * :
+          <%= form.select(:patient_id, @patients.all.collect {|p| [ p.name, p.id ]}, {include_blank: 'Select Patient'}, {class: "form-control", required: true, tabindex: 1, autofocus: true }) %>
+          <p class="d_none text-danger mt-2">
+            <%= fa_icon "exclamation-circle" -%>
+            <%= t('required') %> 
+          </p>
+        </div>    
+      </div>
+    </div>
+
+  <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+        <%= form.label :types_exam_id, "Type Exam :" %>
+        <%= form.select(:types_exam_id, @types_exams.all.collect {|p| [ p.name, p.id ]}, {include_blank: 'Select Type Exam'}, {class: "form-control", tabindex: 2} ) %>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :point_n, "Point Násio * :" %><br>
+        <%= number_field_tag :point_n_x, (!exam.new_record? ? exam.point_n.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 3, placeholder: "Ponto Násio - X", step: :any, size: 10 %>
+        <%= number_field_tag :point_n_y, (!exam.new_record? ? exam.point_n.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 4, placeholder: "Ponto Násio - Y", step: :any %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :point_a, "Point A * :" %> 
+        <%= number_field_tag :point_a_x, (!exam.new_record? ? exam.point_a.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 4, placeholder: "Point A - X", step: :any, size: 10 %>
+        <%= number_field_tag :point_a_y, (!exam.new_record? ? exam.point_a.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 5, placeholder: "Point A - Y", step: :any %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :point_po, "Point P.O. * :" %>
+        <%= number_field_tag :point_po_x, (!exam.new_record? ? exam.point_po.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 6, placeholder: "Point P.O. - X", step: :any, size: 10 %>
+        <%= number_field_tag :point_po_y, (!exam.new_record? ? exam.point_po.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 7, placeholder: "Point P.O. - Y", step: :any %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :point_or, "Point O.R." %> * :
+        <%= number_field_tag :point_or_x, (!exam.new_record? ? exam.point_or.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 8, placeholder: "Point P.O. - Y", step: :any, size: 10 %>
+        <%= number_field_tag :point_or_y, (!exam.new_record? ? exam.point_or.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 9, placeholder: "Point P.O. - Y", step: :any %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit nil, class: "btn btn-primary", tabindex: 10  %>
+    <br>
+    <br>
+    <% if !exam.new_record? %>
+      <%= link_to 'Destroy', exam, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 11 %>
+    <% end %>
+    <%= link_to 'Back', exams_path, class: "btn btn-secondary", tabindex: 12 %>
+  </div>
+<% end %>

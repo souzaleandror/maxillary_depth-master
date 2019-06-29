@@ -1,0 +1,58 @@
+<%= content_for(:title, (@patient.name.truncate(35) if @patient.name.present?) ) -%>
+<%= hidden_field(:patient, :patient_id, :value => @patient.id ) -%>
+
+<p>
+  <strong>Name:</strong>
+  <%= @patient.name -%>
+</p>
+
+<p>
+  <strong>Date of Birth:</strong>
+  <%= @patient.date_birth.strftime('%d/%m/%Y') -%>
+</p>
+
+<%= link_to 'Back', patients_path, class: "btn btn-secondary float-right" -%>
+<%= link_to 'Edit', edit_patient_path(@patient), class: "btn btn-warning float-right mr-2" -%>
+
+<div class="clearfix"></div>
+<hr>
+<div class="clearfix"></div>
+
+<%= link_to 'New Exam', new_exam_path(:id => @patient.id), class: "btn btn-primary float-right", remote: true -%>
+
+<h1>Exams</h1>
+
+<table id="t-patient-exams" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type Exam</th>  
+      <th>Point N</th>  
+      <th>Point A</th>
+      <th>Point P.O</th>
+      <th>Point O.R</th>
+      <th>Angle</th>
+      <th class="float-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="list-exams">
+  </tbody>
+  <tfoot>
+      <tr>
+          <th>ID</th>
+          <th>Type Exam</th>  
+          <th>Point N</th>
+          <th>Point A</th>
+          <th>Point P.O</th>
+          <th>Point O.R</th>
+          <th>Angle</th>
+          <th class="float-right">Actions</th>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="modal_exam">
+</div>
+
+<%= link_to 'Edit', edit_patient_path(@patient), class: "btn btn-warning" -%>
+<%= link_to 'Back', patients_path, class: "btn btn-secondary ml-2" -%>

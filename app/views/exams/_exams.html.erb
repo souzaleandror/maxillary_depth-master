@@ -1,0 +1,31 @@
+<% exams.each do |exam| %>
+  <tr id="rowIndex<%= exam.id.to_s -%>"> 
+    <td>
+      <%= link_to exam.id.to_s, exam %>
+    </td>
+    <td>
+      <%= link_to (exam.types_exam.present? ? exam.types_exam.name : "N/A"), exam %>
+    </td>
+    <td>
+      <%= link_to "X => #{exam.point_n[:x].to_s}, <br> Y => #{exam.point_n[:y].to_s}".html_safe, exam %>
+    </td>
+    <td>
+      <%= link_to "X => #{exam.point_a[:x].to_s}, <br> Y => #{exam.point_a[:y].to_s}".html_safe, exam %>
+    </td>
+    <td>
+      <%= link_to "X => #{exam.point_po[:x].to_s}, <br> Y => #{exam.point_po[:y].to_s}".html_safe, exam %>
+    </td>
+    <td>
+      <%= link_to  "X => #{exam.point_or[:x].to_s}, <br> Y => #{exam.point_or[:y].to_s}".html_safe, exam %>
+    </td>
+    <td>
+      <%= link_to exam.maxillary_depth_angle.to_s, exam %></td>
+    <td>
+      <div class="float-right">
+        <%= link_to 'Show', exam, class: "btn btn-sm btn-info", remote: true  %>
+        <%= link_to 'Edit', edit_exam_path(exam), class: "btn btn-sm btn-warning", remote: true %>
+        <%= link_to 'Destroy', exam, method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: "btn btn-sm btn-danger delete-exam" %>
+      </div>
+    </td>
+  </tr>
+<% end %>

@@ -1,0 +1,72 @@
+<!-- Modal -->
+<div class="modal fade" id="modal_exam" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <%= form_with(model: @exam, url: (@exam.new_record? ? exams_path : exam_path(@exam.id)), remote: true, html: {method: (@exam.new_record? ? :post : :patch), id: "form_new_exam"}) do |form| -%>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">  
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <%= form.label :patient_name, "Patient Name  * :" -%>
+              <%= form.text_field :patient_name, class: "form-control", value: patient.name, disabled: true -%> 
+              <%= hidden_field(:exam, :patient_id, :value => patient.id ) -%>
+            </div>    
+          </div>
+          <div class="col-md-3">
+              <div class="form-group">
+                <%= form.label :types_exam_id, "Type Exam :" %>
+                <%= form.select(:types_exam_id, @types_exams.all.collect {|p| [ p.name, p.id ]}, {include_blank: 'Select Type Exam'}, {class: "form-control"} ) %>
+              </div>    
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <%= form.label :point_n, "Point N" -%> * :
+              <%= number_field_tag :point_n_x, (!@exam.new_record? ? @exam.point_n.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 1, placeholder: "Ponto Násio - X", step: :any -%>
+              <%= number_field_tag :point_n_y, (!@exam.new_record? ? @exam.point_n.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 2, placeholder: "Ponto Násio - Y", step: :any -%>
+            </div>    
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <%= form.label :point_a, "Point A" -%> * :
+              <%= number_field_tag :point_a_x, (!@exam.new_record? ? @exam.point_a.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 3, placeholder: "Ponto A - X", step: :any -%>
+              <%= number_field_tag :point_a_y, (!@exam.new_record? ? @exam.point_a.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 4, placeholder: "Ponto A - Y", step: :any -%>
+            </div>    
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <%= form.label :point_po, "Point P.O." -%> * :
+              <%= number_field_tag :point_po_x, (!@exam.new_record? ? @exam.point_po.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 5, placeholder: "Ponto Pório - X", step: :any -%>
+              <%= number_field_tag :point_po_y, (!@exam.new_record? ? @exam.point_po.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 6, placeholder: "Ponto Pório - Y", step: :any -%>
+            </div>    
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <%= form.label :point_or, "Point O.R." -%> * :
+              <%= number_field_tag :point_or_x, (!@exam.new_record? ? @exam.point_or.x : ""), class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 7, placeholder: "Ponto Orbital - X", step: :any -%>
+              <%= number_field_tag :point_or_y, (!@exam.new_record? ? @exam.point_or.y : ""), class: "form-control mt-2", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 8, placeholder: "Ponto Orbital - Y", step: :any -%>
+            </div>    
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+        <%= form.submit nil, id: "btn-action", class: "btn btn-primary", remote: true, tabindex: 9 -%>
+      </div>
+      <% end -%>
+    </div>
+  </div>
+</div>

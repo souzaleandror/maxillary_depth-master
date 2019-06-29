@@ -1,0 +1,4 @@
+$('.delete-exam').bind('ajax:success', function() {
+  $(this).closest('tr').fadeOut('slow');
+});
+$.notify("Exam was successfully destroyed.", "success");

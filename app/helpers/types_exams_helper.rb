@@ -1,0 +1,2 @@
+module TypesExamsHelper
+end

@@ -1,0 +1,49 @@
+<%= form_with(model: patient, local: true) do |form| %>
+  <% if patient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+
+      <ul>
+      <% patient.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :name, "Name * :" %> 
+        <%= form.text_field :name, class: "form-control allow_text", required: true, pattern: ".{2,64}", maxlength: 64, minlength: 2, tabindex: 1, autofocus: true, placeholder: "Name" %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :date_birth, "Date Birth * :" %> 
+        <%= form.date_field :date_birth, class: "form-control", tabindex: 2, required: true, placeholder: "Date of Birth - DD/MM/YYYY", max: Date.current, min: Date.new(1930, 01, 01) %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+  
+  <div class="actions">
+    <%= form.submit nil, class: "btn btn-primary", tabindex: 3 %>
+    <br>
+    <br>
+    <% if !patient.new_record? %>
+      <%= link_to 'Destroy', @patient, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 4 %>
+    <% end %>
+    <%= link_to 'Back', patients_path, class: "btn btn-secondary", tabindex: 5 %>
+  </div>
+<% end %>

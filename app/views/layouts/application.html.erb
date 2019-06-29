@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <% if content_for?(:title) %>
+      <title>
+        <%= yield :title %> | Maxillary Depth
+      </title>
+    <% else %>
+      <title>Maxillary Depth</title>
+    <% end %>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag params[:controller] %>
+    <%= javascript_include_tag 'three', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'dat.gui', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'TrackballControls', media: 'all', 'data-turbolinks-eval': :reload %>
+
+    <%= javascript_include_tag 'LineSegmentsGeometry', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'LineGeometry', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'LineMaterial', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'LineSegments2', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'Line2', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'Wireframe', media: 'all', 'data-turbolinks-eval': :reload %>
+    <%= javascript_include_tag 'WireframeGeometry2', media: 'all', 'data-turbolinks-eval': :reload %>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <%= link_to "Maxillary Depth", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <%= link_to 'Patients', patients_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Exams', exams_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Type Exams', types_exams_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Points', points_path, class: "nav-link" %>
+        </li>
+      </ul>
+
+      <%= render 'search/form_patient' -%>
+      <%= render 'search/form_exam' -%>
+    </div>
+  </nav>
+
+  <main role="main" class="container">
+  
+  <%= yield %>
+
+  </main><!-- /.container -->
+
+  <script>
+    $(document).ready(function() {
+      // Flash Messages - Notifiy
+      $(function () {
+        var notice = "<%= flash[:notice] %>"
+        $.notify(notice, "success");
+
+        var error = "<%= flash[:error] %>"
+        $.notify(error, "error");
+
+        var alerta = "<%= flash[:alert] %>"
+        $.notify(alerta, "warn");
+      });
+    });
+  </script>
+
+  </body>
+</html>

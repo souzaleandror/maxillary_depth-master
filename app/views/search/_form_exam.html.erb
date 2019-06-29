@@ -1,0 +1,7 @@
+<%= form_with(url: search_path, local: true, class: 'form-inline my-2 my-lg-0', html: { id: 'form_search_exam', method: :get}) do |form| -%>
+  <%= form.select(:field_exam, [["ID","id"],["Patient","patient"]], {include_blank: 'Select Field Exam', selected: (params[:field_exam].present?) ? params[:field_exam] : ""}, {class: "form-control ml-sm-2 b_none b_grey", required: true, tabindex: 50 }) -%>
+  <%= form.text_field(:field_value, class: "form-control b_none b_grey", required: true, pattern: ".{1,64}", maxlength: 64, minlength: 1, tabindex: 51, size: 14, placeholder: "Search Exam", value: (params[:field_exam].present?) ? params[:field_value] : "") -%>
+  <%= form.button class: 'btn btn-secondary b_none', tabindex: 53 do -%>
+    <%= fa_icon "search" -%>
+  <% end %>
+<% end %>

@@ -1,0 +1,59 @@
+<%= form_with(model: point, local: true) do |form| %>
+  <% if point.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(point.errors.count, "error") %> prohibited this point from being saved:</h2>
+
+      <ul>
+      <% point.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+        <%= form.label :point_type, "Point Type :" %>
+        <%= form.select(:point_type, [["Point N", :point_n],["Point A", :point_a],["Point P.O.", :point_po],["Point O.R.", :point_or]], {include_blank: 'Select Type Point'}, {class: "form-control ml-sm-2 b_none b_grey", tabindex: 1, autofocus: true }) -%>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+        <%= form.label :x, "X:" %>
+        <%= form.number_field :x, class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 2, placeholder: "X", step: :any, size: 10 %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+        <%= form.label :y, "Y:" %>
+        <%= form.number_field :y, class: "form-control", required: true, pattern: "[0-9]+([\.,][0-9]+)?", max: 1000, min: 1, tabindex: 3, placeholder: "Y", step: :any, size: 10 %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit nil, class: "btn btn-primary", tabindex: 3 %>
+    <br>
+    <br>
+    <% if !point.new_record? %>
+      <%= link_to 'Show', point, class: "btn btn-info" %>
+      <%= link_to 'Destroy', @point, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 4 %>
+    <% end %>
+    <%= link_to 'Back', points_path, class: "btn btn-secondary", tabindex: 5 %>
+  </div>
+<% end %>

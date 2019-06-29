@@ -1,0 +1,4 @@
+<%= content_for(:title, "Editing Type Exam: #{@point.id.to_s if @point.id.present?}" ) -%>
+<h1>Editing Point: <%= @point.id.to_s -%></h1>
+
+<%= render 'form', point: @point %>

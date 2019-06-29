@@ -1,0 +1,14 @@
+<%= content_for(:title, (@types_exam.name.truncate(35) if @types_exam.name.present?) ) -%>
+<p>
+  <strong>Name:</strong>
+  <%= @types_exam.name -%>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @types_exam.active.to_s -%>
+</p>
+
+<%= link_to 'Edit', edit_types_exam_path(@types_exam), class: "btn btn-warning", autofocus: true, tabindex: 1 -%> 
+<%= link_to 'Destroy', @types_exam, class: "btn btn-danger ml-2", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 2 -%>
+<%= link_to 'Back', types_exams_path, class: "btn btn-secondary ml-2", tabindex: 3 -%>

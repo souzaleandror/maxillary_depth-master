@@ -1,0 +1,6 @@
+$('.modal_exam').html("<%= j render 'exams/modal_exam', exam: @exam, patient: @patient %>");
+$('#modal_exam').modal('toggle');
+$('#modal-label').html('Show Exam #<%= @exam.id -%>');
+$('#btn-action').hide();
+$("#modal_exam :input[type=number]").prop("disabled", true);
+$("#exam_types_exam_id").prop("disabled", true);

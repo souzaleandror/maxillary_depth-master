@@ -1,0 +1,38 @@
+<%= content_for(:title, "Types Exams") -%>
+<%= link_to 'New Type Exam', new_types_exam_path, class: "btn btn-primary float-right" %>
+<h1>Types Exams</h1>
+<hr>
+<table id="t-types-exams" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active</th>
+      <th class="float-right">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @types_exams.each do |types_exam| %>
+      <tr>
+        <td><%= link_to types_exam.name, types_exam %></td>
+        <td><%= link_to types_exam.active.to_s, types_exam %></td>
+        <td>
+          <div class="float-right">
+            <%= link_to 'Show', types_exam, class: "btn btn-sm btn-info" %>
+            <%= link_to 'Edit', edit_types_exam_path(types_exam), class: "btn btn-sm btn-warning" %>
+            <%= link_to 'Destroy', types_exam, class: "btn btn-sm btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+      <tr>
+        <th>Name</th>
+        <th>Active</th>
+        <th class="float-right">Actions</th>
+      </tr>
+    </tfoot>
+</table>
+<hr>
+<%= link_to 'New Types Exam', new_types_exam_path, class: "btn btn-primary" %>

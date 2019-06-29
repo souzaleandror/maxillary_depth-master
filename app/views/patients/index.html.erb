@@ -1,0 +1,45 @@
+<%= content_for(:title, "Patients") -%>
+<%= link_to 'New Patient', new_patient_path, class: "btn btn-primary float-right" -%>
+<h1>Patients</h1>
+<hr>
+<table id="t-patients" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date Birth</th>
+      <th>Qty Exams</th>
+      <th>Date Last Exam</th>
+      <th class="float-right">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @patients.each do |patient| -%>
+      <tr>
+        <td><%= link_to patient.name, patient -%></td>
+        <td><%= link_to patient.date_birth.strftime('%d/%m/%Y'), patient -%></td>
+        <td><%= link_to (patient.exams.present? ? (link_to patient.exams.count.to_s, patient) : 0), patient -%></td>
+        <td><%= link_to (patient.exams.present? ? (link_to patient.exams.last.created_at.strftime('%d/%m/%Y %H:%M:%S'), patient) : "N/A"), patient -%></td>
+        <td>
+          <div class="float-right">
+          <%= link_to 'Show', patient, class: "btn btn-sm btn-info" -%>
+          <%= link_to 'Edit', edit_patient_path(patient), class: "btn btn-sm btn-warning" -%>
+          <%= link_to 'Destroy', patient, class: "btn btn-sm btn-danger", method: :delete, data: { confirm: 'Are you sure?' } -%>
+          </div>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+
+  <tfoot>
+      <tr>
+        <th>Name</th>
+        <th>Date Birth</th>
+        <th>Qty Exams</th>
+        <th>Date Last Exam</th>
+        <th class="float-right">Actions</th>
+      </tr>
+    </tfoot>
+</table>
+<hr>
+<%= link_to 'New Patient', new_patient_path, class: "btn btn-primary" -%>

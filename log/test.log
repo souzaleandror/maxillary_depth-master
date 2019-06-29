@@ -1,0 +1,150 @@
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (3.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS `maxillary_depth_test`[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE DATABASE `maxillary_depth_test` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (40.9ms)[0m  [1m[35mDROP TABLE IF EXISTS `exams` CASCADE[0m
+  [1m[35m (12.8ms)[0m  [1m[35mCREATE TABLE `exams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `patient_id` bigint, `types_exam_id` bigint, `point_n_id` bigint, `point_a_id` bigint, `point_po_id` bigint, `point_or_id` bigint, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_exams_on_patient_id`  (`patient_id`),  INDEX `index_exams_on_point_a_id`  (`point_a_id`),  INDEX `index_exams_on_point_n_id`  (`point_n_id`),  INDEX `index_exams_on_point_or_id`  (`point_or_id`),  INDEX `index_exams_on_point_po_id`  (`point_po_id`),  INDEX `index_exams_on_types_exam_id`  (`types_exam_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE IF EXISTS `friendly_id_slugs` CASCADE[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE `friendly_id_slugs` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `slug` varchar(255) NOT NULL, `sluggable_id` int NOT NULL, `sluggable_type` varchar(50), `scope` varchar(255), `created_at` datetime, UNIQUE INDEX `index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope`  (`slug`(70), `sluggable_type`, `scope`(70)),  INDEX `index_friendly_id_slugs_on_slug_and_sluggable_type`  (`slug`(140), `sluggable_type`),  INDEX `index_friendly_id_slugs_on_sluggable_type_and_sluggable_id`  (`sluggable_type`, `sluggable_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE IF EXISTS `patients` CASCADE[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE `patients` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `date_birth` date, `slug` varchar(255), UNIQUE INDEX `index_patients_on_slug`  (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE IF EXISTS `points` CASCADE[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE `points` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `point_type` int, `x` float(24), `y` float(24), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE IF EXISTS `types_exams` CASCADE[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE `types_exams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `active` tinyint(1), `slug` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, UNIQUE INDEX `index_types_exams_on_name`  (`name`), UNIQUE INDEX `index_types_exams_on_slug`  (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (20.2ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_6989b69bff`
+FOREIGN KEY (`patient_id`)
+  REFERENCES `patients` (`id`)
+[0m
+  [1m[35m (21.1ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_946545c85c`
+FOREIGN KEY (`point_a_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (19.6ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_94f1041fcc`
+FOREIGN KEY (`point_n_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (25.7ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_a044a20d12`
+FOREIGN KEY (`point_or_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (25.3ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_852a58fb96`
+FOREIGN KEY (`point_po_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (29.2ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_6b518572a4`
+FOREIGN KEY (`types_exam_id`)
+  REFERENCES `types_exams` (`id`)
+[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[32mINSERT INTO `schema_migrations` (version) VALUES (20190624201715)[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (version) VALUES
+(20190624201707),
+(20190624170144),
+(20190624170124),
+(20190624201516),
+(20190603203143),
+(20190624170140);
+
+[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'test', '2019-06-24 20:52:19', '2019-06-24 20:52:19')[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPatient Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `patients` WHERE `patients`.`id` IS NOT NULL AND `patients`.`slug` = 'mark' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPatient Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM `patients` WHERE `patients`.`id` IS NOT NULL AND `patients`.`slug` = 'mark' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (3.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS `maxillary_depth_test`[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE DATABASE `maxillary_depth_test` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (41.4ms)[0m  [1m[35mDROP TABLE IF EXISTS `exams` CASCADE[0m
+  [1m[35m (17.2ms)[0m  [1m[35mCREATE TABLE `exams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `patient_id` bigint, `types_exam_id` bigint, `point_n_id` bigint, `point_a_id` bigint, `point_po_id` bigint, `point_or_id` bigint, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_exams_on_patient_id`  (`patient_id`),  INDEX `index_exams_on_point_a_id`  (`point_a_id`),  INDEX `index_exams_on_point_n_id`  (`point_n_id`),  INDEX `index_exams_on_point_or_id`  (`point_or_id`),  INDEX `index_exams_on_point_po_id`  (`point_po_id`),  INDEX `index_exams_on_types_exam_id`  (`types_exam_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.3ms)[0m  [1m[35mDROP TABLE IF EXISTS `friendly_id_slugs` CASCADE[0m
+  [1m[35m (10.7ms)[0m  [1m[35mCREATE TABLE `friendly_id_slugs` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `slug` varchar(255) NOT NULL, `sluggable_id` int NOT NULL, `sluggable_type` varchar(50), `scope` varchar(255), `created_at` datetime, UNIQUE INDEX `index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope`  (`slug`(70), `sluggable_type`, `scope`(70)),  INDEX `index_friendly_id_slugs_on_slug_and_sluggable_type`  (`slug`(140), `sluggable_type`),  INDEX `index_friendly_id_slugs_on_sluggable_type_and_sluggable_id`  (`sluggable_type`, `sluggable_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS `patients` CASCADE[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE `patients` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `date_birth` date, `slug` varchar(255), UNIQUE INDEX `index_patients_on_slug`  (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.3ms)[0m  [1m[35mDROP TABLE IF EXISTS `points` CASCADE[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE `points` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `point_type` int, `x` float(24), `y` float(24), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (1.2ms)[0m  [1m[35mDROP TABLE IF EXISTS `types_exams` CASCADE[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE `types_exams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `active` tinyint(1), `slug` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, UNIQUE INDEX `index_types_exams_on_name`  (`name`), UNIQUE INDEX `index_types_exams_on_slug`  (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8[0m
+  [1m[35m (29.9ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_6989b69bff`
+FOREIGN KEY (`patient_id`)
+  REFERENCES `patients` (`id`)
+[0m
+  [1m[35m (31.2ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_946545c85c`
+FOREIGN KEY (`point_a_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (29.2ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_94f1041fcc`
+FOREIGN KEY (`point_n_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (29.2ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_a044a20d12`
+FOREIGN KEY (`point_or_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (32.3ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_852a58fb96`
+FOREIGN KEY (`point_po_id`)
+  REFERENCES `points` (`id`)
+[0m
+  [1m[35m (31.1ms)[0m  [1m[35mALTER TABLE `exams` ADD CONSTRAINT `fk_rails_6b518572a4`
+FOREIGN KEY (`types_exam_id`)
+  REFERENCES `types_exams` (`id`)
+[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (version) VALUES (20190624201715)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO `schema_migrations` (version) VALUES
+(20190624201707),
+(20190624170144),
+(20190624170124),
+(20190624201516),
+(20190603203143),
+(20190624170140);
+
+[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'test', '2019-06-24 21:02:23', '2019-06-24 21:02:23')[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPatient Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM `patients` WHERE `patients`.`id` IS NOT NULL AND `patients`.`slug` = 'mark' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPatient Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `patients` WHERE `patients`.`id` IS NOT NULL AND `patients`.`slug` = 'mark' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m

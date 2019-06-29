@@ -1,0 +1,4 @@
+<%= content_for(:title, "Editing Exam: #{@exam.id.to_s if @exam.id.present?}" ) -%>
+<h1>Editing Exam: <%= @exam.id.to_s -%></h1>
+
+<%= render 'form', exam: @exam %>

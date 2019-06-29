@@ -1,0 +1,5 @@
+<%= content_for(:title, "Editing Type Exam: #{@types_exam.name.truncate(35) if @types_exam.name.present?}" ) -%>
+
+<h1>Editing Type Exam: <%= @types_exam.name -%></h1>
+
+<%= render 'form', types_exam: @types_exam %>

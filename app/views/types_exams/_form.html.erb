@@ -1,0 +1,46 @@
+<%= form_with(model: types_exam, local: true) do |form| %>
+  <% if types_exam.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(types_exam.errors.count, "error") %> prohibited this types_exam from being saved:</h2>
+
+      <ul>
+      <% types_exam.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :name, "Name * :" %> 
+        <%= form.text_field :name, class: "form-control allow_text", required: true, pattern: ".{2,64}", maxlength: 64, minlength: 2, tabindex: 1, autofocus: true, placeholder: "Name" %>
+        <p class="d_none text-danger mt-2">
+          <%= fa_icon "exclamation-circle" -%>
+          <%= t('required') %> 
+        </p>
+      </div>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :active, 'Active :' %>
+        <%= form.check_box :active, class: "form-control", tabindex: 2   %>
+      </div>    
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit nil, class: "btn btn-primary", tabindex: 3 %>
+    <br>
+    <br>
+    <% if !types_exam.new_record? %>
+      <%= link_to 'Show', types_exam, class: "btn btn-info" %>
+      <%= link_to 'Destroy', @types_exam, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }, tabindex: 4 %>
+    <% end %>
+    <%= link_to 'Back', types_exams_path, class: "btn btn-secondary", tabindex: 5 %>
+  </div>
+<% end %>
